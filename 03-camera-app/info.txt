@@ -42,7 +42,7 @@ Claude was used for guidance and code assistance during development.
 Specific areas where Claude provided help:
 
 - ArUco detection: reused and adapted from the previous assignment with Claude's help.
-- Including text to display mode and countdown on top of the camera image.
+- Helped include text to display mode, gesture and countdown on top of the camera image.
 - Debugging: helped debug several issues throughout development.
 - Helped write this info.txt file.
 
