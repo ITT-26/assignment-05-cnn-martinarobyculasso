@@ -55,9 +55,9 @@ Open `02-dataset/evaluation.ipynb` and run all cells. Before running, download t
 
 ## Exercise 3 - Gesture-controlled Camera App
 
-A gesture-controlled camera application that uses a CNN to recognize hand gestures in real time via webcam. Due to other responsibilities and being away travelling, there was not enough time to get the gesture recognition working reliably in practice.
+A gesture-controlled camera application that uses a CNN to recognize hand gestures in real time via webcam. Due to other responsibilities and being away travelling, I had not enough time to get the gesture recognition working reliably in practice (I'm sorry).
 
-The model was trained on a subset of the HaGRID dataset using Grayscale images (best performing color mode from Exercise 1), with the same base architecture as in class and adjusted early stopping patience. While the model performed well on the HaGRID test set, it did not generalize well to webcam input. Using a physical ArUco board as a bounding box for the region of interest was also attempted, but did not improve results significantly.
+The model was trained on a subset of the HaGRID dataset using Grayscale images (best performing color mode from Exercise 1), with the same base architecture as in class. While the model performed well on the HaGRID test/validation set, it did not generalize well to my webcam input. Using a physical ArUco board as a bounding box for the region of interest was also attempted, but did not improve results significantly. I suppose I'm doing something wrong when processing the captured images, but I couldn't figure it out on time.
 
 As a result, the submitted version maps keyboard keys to gestures so that the camera effects can at least be tested:
 
