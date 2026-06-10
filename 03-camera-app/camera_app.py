@@ -186,6 +186,83 @@ class CameraApp:
         cv2.imwrite(full_path, photo)
         print(f"Photo saved to {full_path}")
 
+
+    # board detection - sometimes works with rock and like / 
+    # I left the space key trigger for prediction, it's difficult to try out because you need like a third hand, but it was for debugging/testing
+
+    # def run(self):
+    #     gesture = None
+    #     confidence = None
+
+    #     while True:
+    #         ret, frame = self.cap.read()
+    #         if not ret:
+    #             print("Error capturing frame")
+    #             break
+
+    #         # apply current mode to displayed frame
+    #         display = self.apply_mode(frame)
+
+    #         # handle countdown
+    #         if self.counting_down:
+    #             seconds_left = self.countdown_end - time.time()
+    #             if seconds_left <= 0:
+    #                 self.take_photo(frame)
+    #                 self.counting_down = False
+    #                 self.countdown_end = None
+    #             else:
+    #                 cv2.putText(
+    #                     display,
+    #                     str(int(seconds_left) + 1),
+    #                     (display.shape[1] // 2 - 30, display.shape[0] // 2),
+    #                     cv2.FONT_HERSHEY_SIMPLEX,
+    #                     3,
+    #                     (0, 0, 255),
+    #                     5,
+    #                 )
+
+    #         # detect board
+    #         source = self.detect_board(frame)
+    #         if source is not None:
+    #             x, y, w, h = cv2.boundingRect(source.astype(np.int32))
+    #             cv2.rectangle(display, (x, y), (x+w, y+h), (0, 255, 0), 2)
+
+    #         # show current mode and last gesture
+    #         cv2.putText(display, f"mode: {self.mode}", (10, 30),
+    #                     cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+    #         if gesture is not None:
+    #             cv2.putText(display, f"gesture: {gesture}", (10, 60),
+    #                         cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+
+    #         cv2.imshow(self.window_name, display)
+
+    #         key = cv2.waitKey(1) & 0xFF
+    #         if key == ord("q"):
+    #             self.stop()
+    #             break
+    #         elif key == ord(" "):
+    #             if source is not None:
+    #                 x, y, w, h = cv2.boundingRect(source.astype(np.int32))
+    #                 crop = frame[y:y+h, x:x+w]
+    #                 gesture, confidence = self.predict(crop)
+    #                 print(f"{gesture} ({confidence:.2f})")
+    #                 self.handle_gesture(gesture)
+    #             else:
+    #                 print("No board detected")
+    #         elif key == ord("1"):
+    #             gesture = "like"
+    #             self.handle_gesture("like")
+    #         elif key == ord("2"):
+    #             gesture = "stop"
+    #             self.handle_gesture("stop")
+    #         elif key == ord("3"):
+    #             gesture = "rock"
+    #             self.handle_gesture("rock")
+
+    #     def stop(self):
+    #         self.cap.release()
+    #         cv2.destroyAllWindows()
+
     def run(self):
         gesture = None
         confidence = None
