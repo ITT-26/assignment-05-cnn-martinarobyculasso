@@ -73,7 +73,7 @@ class CameraApp:
     def predict(self, crop):
         x = self.preprocess(crop)
         probs = self.model.predict(x, verbose=0)
-        print(f"probs: {probs}")  # ver todas las probabilidades
+        print(f"probs: {probs}") 
         idx = np.argmax(probs)
         return LABEL_NAMES[idx], probs[0][idx]
 
