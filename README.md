@@ -65,7 +65,7 @@ As a result, the submitted version maps keyboard keys to gestures so that the ca
 |-----|---------|--------|
 | `1` | like | Starts a selfie countdown |
 | `2` | stop | Toggles portrait mode (center stays sharp, background blurred) |
-| `3` | peace | Toggles sepia filter |
+| `3` | rock | Toggles sepia filter |
 | `Space` | — | Attempts gesture prediction on the current frame (used for debugging, in the actual app it would be automatic or trigerred with the ArUco board) |
 
 **Usage:**

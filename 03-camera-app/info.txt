@@ -1,0 +1,54 @@
+EXERCISE 3 - GESTURE-CONTROLLED CAMERA APP
+===========================================
+
+A gesture-controlled camera application that uses a CNN to recognize hand gestures
+in real time via webcam. Due to time constraints, gesture recognition via the model
+did not work reliably in practice, so the submitted version maps keyboard keys to gestures to allow the
+camera effects to be tested. A physical ArUco board as a bounding box for the region
+of interest was also attempted but did not improve results.
+
+FILES
+=====
+
+camera_app.py
+-------------
+Main script. Handles gesture input (keyboard or CNN prediction), selfie countdown,
+photo saving, and two additional camera effects: portrait mode and sepia filter.
+Uses argparse for command line arguments.
+
+camera_app_model.ipynb
+-----------------------
+Notebook used to train the gesture classifier. Uses the same architecture and
+preprocessing pipeline as Exercise 1 (Grayscale, best performing color mode),
+with three gesture classes: like, stop and rock.
+
+model_cam_grayscale.keras
+------------------------------------------------------
+Trained model for the camera app gesture classifier.
+
+pictures/
+---------
+Default folder where captured photos are saved.
+
+NOTES
+=====
+- The model was trained on a subset of the HaGRID dataset. It performed well on
+  the test set.
+- Keyboard controls: 1 (like), 2 (stop), 3 (peace), Space (predict), Q (quit).
+
+AI USAGE (Claude - Anthropic)
+==============================
+Claude was used for guidance and code assistance during development.
+Specific areas where Claude provided help:
+
+- ArUco detection: reused and adapted from the previous assignment with Claude's help.
+- Including text to display mode and countdown on top of the camera image.
+- Debugging: helped debug several issues throughout development.
+- Helped write this info.txt file.
+
+REFERENCES
+==========
+- ArUco detection logic reused from previous assignment.
+- Sepia filter: Filipe Chagas, https://gist.github.com/FilipeChagasDev/bb63f46278ecb4ffe5429a84926ff812
+- OpenCV documentation: https://docs.opencv.org/
+- HaGRID dataset: https://github.com/hukenovs/hagrid
