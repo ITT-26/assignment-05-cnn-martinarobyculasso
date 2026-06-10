@@ -55,17 +55,18 @@ Open `02-dataset/evaluation.ipynb` and run all cells. Before running, download t
 
 ## Exercise 3 - Gesture-controlled Camera App
 
-A gesture-controlled camera application that uses a CNN to recognize hand gestures in real time via webcam. The model was trained on Grayscale images (best performing color mode from Exercise 1), using the same base architecture as in class with adjusted early stopping patience to allow proper convergence.
+A gesture-controlled camera application that uses a CNN to recognize hand gestures in real time via webcam. Due to other responsibilities and being away travelling, there was not enough time to get the gesture recognition working reliably in practice.
 
-Three gestures are supported:
+The model was trained on a subset of the HaGRID dataset using Grayscale images (best performing color mode from Exercise 1), with the same base architecture as in class and adjusted early stopping patience. While the model performed well on the HaGRID test set, it did not generalize well to webcam input. Using a physical ArUco board as a bounding box for the region of interest was also attempted, but did not improve results significantly.
 
-| Gesture | Action |
-|---------|--------|
-| `like` | Starts a selfie countdown |
-| `stop` | Toggles portrait mode (center stays sharp, background blurred) |
-| `rock` | Toggles sepia filter |
+As a result, the submitted version maps keyboard keys to gestures so that the camera effects can at least be tested:
 
-A physical board with four ArUco markers at the corners is used to define the region of interest for gesture detection. The app requires this board to be visible in the camera frame.
+| Key | Gesture | Action |
+|-----|---------|--------|
+| `1` | like | Starts a selfie countdown |
+| `2` | stop | Toggles portrait mode (center stays sharp, background blurred) |
+| `3` | peace | Toggles sepia filter |
+| `Space` | — | Attempts gesture prediction on the current frame (used for debugging, in the actual app it would be automatic or trigerred with the ArUco board) |
 
 **Usage:**
 
@@ -84,6 +85,8 @@ python camera_app.py --path ./pictures --timer 3
 
 | Key | Action |
 |-----|--------|
+| `1` / `2` / `3` | Trigger gesture |
+| `Space` | Predict gesture from current frame |
 | `Q` | Quit |
 
-> Requires a webcam and a physical board with four ArUco markers (IDs 0–3) at the corners.
+> Requires a webcam.

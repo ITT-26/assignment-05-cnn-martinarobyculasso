@@ -5,11 +5,9 @@ import numpy as np
 import time
 import os
 
-# added these lines to ignore some warnings with AI's help
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
-import absl.logging
-absl.logging.set_verbosity(absl.logging.ERROR)
+# added these lines to ignore some warnings with AI's help - anyways it stills takes a bit of time for the camera to start
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
+os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
 # ---
 
 from keras.models import load_model
@@ -24,7 +22,7 @@ SIZE = (IMG_SIZE, IMG_SIZE)
 LABEL_NAMES = ["like", "stop", "rock"]
 
 # COMMAND LINE ARGUMENT PARSER
-# inspired from the previous assignment, but in this case optional arguments are used (--) 
+# inspired from the previous assignment, but in this case optional arguments are used (--)
 # in order to set defaults if user doesn't specify path or timer
 parser = argparse.ArgumentParser(description="Gesture-controlled camera app")
 parser.add_argument(
@@ -69,18 +67,19 @@ class CameraApp:
         resized = cv2.resize(gray, SIZE)
         # turn into numpy array
         arr = np.array(resized).astype("float32") / 255.0
-        
-        return arr.reshape(1, IMG_SIZE, IMG_SIZE, 1)
+
+        return arr.reshape(-1, IMG_SIZE, IMG_SIZE, 1)
 
     def predict(self, crop):
         x = self.preprocess(crop)
         probs = self.model.predict(x, verbose=0)
+        print(f"probs: {probs}")  # ver todas las probabilidades
         idx = np.argmax(probs)
-
         return LABEL_NAMES[idx], probs[0][idx]
 
     # aruco board detection
     # code reused from previous assignment
+    # tried out using the physical bounding box but the predictions did not work - sorry I didn't have time to look into it
     def detect_board(self, frame):
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         corners, ids, _ = self.detector.detectMarkers(gray)
@@ -188,34 +187,63 @@ class CameraApp:
         print(f"Photo saved to {full_path}")
 
     def run(self):
+        gesture = None
+        confidence = None
+
         while True:
             ret, frame = self.cap.read()
             if not ret:
-                print('Error capturing frame')
+                print("Error capturing frame")
                 break
 
-            # detect board
-            source = self.detect_board(frame)
+            # apply current mode to displayed frame
+            display = self.apply_mode(frame)
 
-            if source is not None:
-                # get bounding rect of the 4 markers
-                x, y, w, h = cv2.boundingRect(source.astype(np.int32))
-                crop = frame[y:y+h, x:x+w]
+            # handle countdown
+            if self.counting_down:
+                seconds_left = self.countdown_end - time.time()
+                if seconds_left <= 0:
+                    self.take_photo(frame)
+                    self.counting_down = False
+                    self.countdown_end = None
+                else:
+                    cv2.putText(
+                        display,
+                        str(int(seconds_left) + 1),
+                        (display.shape[1] // 2 - 30, display.shape[0] // 2),
+                        cv2.FONT_HERSHEY_SIMPLEX,
+                        3,
+                        (0, 0, 255),
+                        5,
+                    )
 
-                # predict
-                gesture, confidence = self.predict(crop)
-                print(f'{gesture} ({confidence:.2f})')
+            # show current mode and last gesture
+            cv2.putText(display, f"mode: {self.mode}", (10, 30),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+            if gesture is not None:
+                cv2.putText(display, f"gesture: {gesture}", (10, 60),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
 
-                # draw bounding box on frame
-                cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
-                cv2.putText(frame, f'{gesture} ({confidence:.2f})', (x, y-10),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
+            cv2.imshow(self.window_name, display)
 
-            cv2.imshow(self.window_name, frame)
-
-            if cv2.waitKey(1) & 0xFF == ord('q'):
+            key = cv2.waitKey(1) & 0xFF
+            if key == ord("q"):
                 self.stop()
                 break
+            elif key == ord(" "):
+                # predict on current frame when space is pressed - for debugging
+                gesture, confidence = self.predict(frame)
+                print(f"{gesture} ({confidence:.2f})")
+                self.handle_gesture(gesture)
+            elif key == ord("1"):
+                gesture = "like"
+                self.handle_gesture("like")
+            elif key == ord("2"):
+                gesture = "stop"
+                self.handle_gesture("stop")
+            elif key == ord("3"):
+                gesture = "rock"
+                self.handle_gesture("rock")
 
     def stop(self):
         self.cap.release()

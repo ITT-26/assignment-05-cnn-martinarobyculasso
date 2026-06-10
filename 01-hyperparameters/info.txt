@@ -34,6 +34,8 @@ Specific areas where Claude provided help:
 - Notebook structure: helped design the loop-based experiment structure
   and refactored the original notebook into reusable functions.
 - Corrected English expressions in the written sections.
+- Helped with plots/visualization.
+- Helped include "inference time" as a metric after explaining what I wanted to have a look at.
 - Helped write this info.txt file.
 
 REFERENCES
