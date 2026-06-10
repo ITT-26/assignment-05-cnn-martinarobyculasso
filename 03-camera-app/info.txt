@@ -28,13 +28,13 @@ Trained model for the camera app gesture classifier.
 
 pictures/
 ---------
-Default folder where captured photos are saved.
+Folder where example photos are saved and which can be selected as the saving path.
 
 NOTES
 =====
 - The model was trained on a subset of the HaGRID dataset. It performed well on
   the test set.
-- Keyboard controls: 1 (like), 2 (stop), 3 (peace), Space (predict), Q (quit).
+- Keyboard controls: 1 (like), 2 (stop), 3 (rock), Space (predict), Q (quit).
 
 AI USAGE (Claude - Anthropic)
 ==============================
