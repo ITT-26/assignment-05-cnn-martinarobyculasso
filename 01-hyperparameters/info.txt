@@ -1,0 +1,47 @@
+EXERCISE 1 - HYPERPARAMETER EXPLORATION: IMAGE COLOR MODE
+==========================================================
+
+Explores the effect of image color mode on CNN prediction accuracy and
+convergence speed. Five color spaces are tested: RGB, Grayscale, HSV, LAB,
+and YCrCb. A separate model is trained for each using a subset of the HaGRID
+dataset, and results are compared via validation accuracy, validation loss,
+epochs until convergence, and confusion matrices.
+
+FILES
+=====
+
+image_color_mode.ipynb
+----------------------
+Main notebook. Contains the full pipeline: data loading, preprocessing,
+model training, evaluation, and result visualization for all five color
+spaces. Also includes the theoretical background and discussion of results.
+
+hyperparameters.ipynb
+---------------------
+Original notebook provided in class. Used as the base for image_color_mode.ipynb.
+
+NOTES
+=====
+- The dataset path must be updated at the top of the notebook before running.
+- The HaGRID dataset subset must be downloaded separately from GRIPS.
+- Models are saved as .keras files after training.
+
+AI USAGE (Claude - Anthropic)
+==============================
+Claude was used for guidance and code assistance during development.
+Specific areas where Claude provided help:
+
+- Notebook structure: helped design the loop-based experiment structure
+  and refactored the original notebook into reusable functions.
+- Corrected English expressions in the written sections.
+- Helped write this info.txt file.
+
+REFERENCES
+==========
+- Base CNN architecture: ITT sample code (hyperparameters.ipynb).
+- HaGRID dataset: https://github.com/hukenovs/hagrid
+- Color spaces in OpenCV: https://learnopencv.com/color-spaces-in-opencv-cpp-python/
+- Wikipedia - HSL and HSV: https://en.wikipedia.org/wiki/HSL_and_HSV
+- Wikipedia - YCbCr: https://en.wikipedia.org/wiki/YCbCr
+- Wikipedia - CIELAB color space: https://en.wikipedia.org/wiki/CIELAB_color_space
+- OpenCV documentation: https://docs.opencv.org/

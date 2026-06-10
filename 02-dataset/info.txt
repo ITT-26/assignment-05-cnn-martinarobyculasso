@@ -1,0 +1,53 @@
+EXERCISE 2 - GATHERING A DATASET
+=================================
+
+Extends the HaGRID dataset with custom images of five hand gestures: like,
+dislike, stop, rock, and peace. Images were captured, annotated, and used
+to evaluate a CNN trained on the HaGRID dataset.
+
+FILES
+=====
+
+annotater.py
+------------
+Tool for capturing and annotating images via webcam. Based on the annotater
+tool by Patrick Graf (see References), with a countdown timer added to allow
+stepping back from the camera before the frame is frozen.
+
+evaluation.ipynb
+----------------
+Notebook that loads the custom images, runs predictions using the Grayscale
+model from Exercise 1, and plots the results as a confusion matrix.
+
+annot-martinarobyculasso.json
+-----------------------------
+Annotation file for the custom images, compatible with the HaGRID format.
+Contains bounding boxes and labels for each image.
+
+conf-matrix.png
+---------------
+Confusion matrix of the CNN predictions on the custom dataset.
+
+like/, dislike/, stop/, rock/, peace/
+--------------------------------------
+Folders containing the captured images, organized by gesture category to
+match the HaGRID directory structure.
+
+NOTES
+=====
+- Images were manually moved into per-category folders after capture to
+  match the HaGRID directory structure, allowing the data loading code
+  from Exercise 1 to be reused directly.
+- The Grayscale color mode was chosen based on its performance in Exercise 1.
+
+AI USAGE (Claude - Anthropic)
+==============================
+Specific areas where Claude provided help:
+
+- Helped write this info.txt file.
+
+REFERENCES
+==========
+- Annotater tool: Patrick Graf, https://github.com/ITT-26/assignment-05-cnn-PatrickGraf99/blob/main/02-dataset/annotater.py
+- HaGRID dataset: https://github.com/hukenovs/hagrid
+- OpenCV documentation: https://docs.opencv.org/
